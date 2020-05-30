@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve:dev": "webpack-dev-server --env.NODE_ENV=dev --progress --color --open --hot"
+    "serve:dev": "webpack-dev-server --env.NODE_ENV=dev --progress --color --open --hot -d"
   },
   "author": "",
   "license": "ISC",
