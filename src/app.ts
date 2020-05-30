@@ -1,11 +1,11 @@
-import * as PIXI from 'pixi.js';
-import gameLoop from './game/gameLoop'
+import { Application } from 'pixi.js';
+import Game from './game/Game'
 import './style/index.css';
 
 const canvas: HTMLCanvasElement = document.querySelector('#c');
-const app = new PIXI.Application({ view: canvas });
+const app = new Application({ view: canvas });
 
-app.ticker.add(gameLoop);
+const game = new Game(app);
 
 function resizeRendererToDisplaySize(renderer: PIXI.AbstractRenderer) {
   const canvas = renderer.view;
