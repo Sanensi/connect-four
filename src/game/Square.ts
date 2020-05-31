@@ -30,13 +30,5 @@ export default class Square extends Container {
     this.shape.drawCircle(center, center, center - this.holeBorderWidth);
     this.shape.endHole();
     this.shape.endFill();
-    this.shape.pivot.set(center, center);
-  }
-
-  public resize(w, h) {
-    const proportion = this.holeBorderWidth / this.size ;
-    this.size = Math.min(w, h);
-    this.holeBorderWidth = proportion * this.size;
-    this.drawShape();
   }
 }

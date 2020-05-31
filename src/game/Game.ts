@@ -1,24 +1,24 @@
 import Square from './Square';
+import Grid from './Grid';
 
 
 export default class Game {
   private app: PIXI.Application;
-  private shape =  new Square(100, 2.5);
+  private grid = new Grid(7, 6);
 
   constructor(app: PIXI.Application) {
     this.app = app;
     this.setup();
-    this.app.ticker.add(this.update);
     this.resize();
+    this.app.ticker.add(this.update);
   }
 
   private setup() {
-    this.app.stage.addChild(this.shape);
+    this.app.stage.addChild(this.grid);
   }
 
   private update = (delta: number) => {
-    this.shape.position.x = this.app.renderer.width/2;
-    this.shape.position.y = this.app.renderer.height/2;
+
   }
 
   public resize = () => {
@@ -26,6 +26,6 @@ export default class Game {
     const width = canvas.clientWidth;
     const height = canvas.clientHeight;
     this.app.renderer.resize(width, height);
-    this.shape.resize(width, height);
+    this.grid.resize(width, height);
   }
 }
