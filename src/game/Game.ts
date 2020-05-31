@@ -18,7 +18,6 @@ export default class Game {
   }
 
   private update = (delta: number) => {
-
   }
 
   public resize = () => {
