@@ -31,14 +31,12 @@ export default class Grid extends Container {
   }
   
   private onSquareOver = (gridPosition: Point) => {
-    console.log(`In: ${gridPosition.x}`);
     for (let y = 0; y < this.rows; y++) {
       this.getSquare(gridPosition.x, y).select();
     }
   }
 
   private onSquareOut = (gridPosition: Point) => {
-    console.log(`Out: ${gridPosition.x}`);
     for (let y = 0; y < this.rows; y++) {
       this.getSquare(gridPosition.x, y).unselect();
     }

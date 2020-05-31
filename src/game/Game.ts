@@ -1,6 +1,4 @@
-import Square from './Square';
-import Grid from './Grid';
-
+import Grid from './graphics/Grid';
 
 export default class Game {
   private app: PIXI.Application;

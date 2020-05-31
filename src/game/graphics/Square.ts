@@ -1,4 +1,4 @@
-import { Graphics, Container, Rectangle, interaction } from "pixi.js";
+import { Graphics, Container, Rectangle } from "pixi.js";
 
 export default class Square extends Container {
   private shape: PIXI.Graphics;
@@ -6,7 +6,7 @@ export default class Square extends Container {
   private size: number;
   private holeBorderWidth: number;
   private color: number = 0x4040ff;
-  private hoverColor: number = 0xC0C0C0;
+  private selectedColor: number = 0xC0C0C0;
 
   private _gridPosition: PIXI.Point;
 
@@ -54,11 +54,10 @@ export default class Square extends Container {
   }
 
   public select() {
-    this.drawShape(this.hoverColor);
+    this.drawShape(this.selectedColor);
   }
 
   public unselect() {
     this.drawShape(this.color);
   }
-
 }
