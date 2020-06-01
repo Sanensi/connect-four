@@ -22,6 +22,7 @@ export default class Grid extends Container {
         this.squares.push(square);
         square.addListener('square-over', this.onSquareOver);
         square.addListener('square-out', this.onSquareOut);
+        square.addListener('square-up', this.onSquareUp);
         this.addChild(square);
       }
     }
@@ -31,9 +32,7 @@ export default class Grid extends Container {
   }
   
   private onSquareOver = (gridPosition: Point) => {
-    for (let y = 0; y < this.rows; y++) {
-      this.getSquare(gridPosition.x, y).select();
-    }
+    this.getFirstEmptySquare(gridPosition.x).select();
   }
 
   private onSquareOut = (gridPosition: Point) => {
@@ -42,8 +41,22 @@ export default class Grid extends Container {
     }
   }
 
+  private onSquareUp = (gridPosition: Point) => {
+    this.getFirstEmptySquare(gridPosition.x).addToken(0xff2020);
+  }
+
   private getSquare(x: number, y: number) {
     return this.squares[x + y * this.columns];
+  }
+
+  private getFirstEmptySquare(x: number) {
+    for (let y = this.rows-1; y >= 0; y--) {
+      const square = this.getSquare(x, y)
+      if (!square.hasToken) {
+        return square;
+      }
+    }
+    return undefined;
   }
 
   public resize(width: number, height: number) {
