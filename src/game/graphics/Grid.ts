@@ -32,7 +32,7 @@ export default class Grid extends Container {
   }
   
   private onSquareOver = (gridPosition: Point) => {
-    this.getFirstEmptySquare(gridPosition.x).select();
+    this.getFirstEmptySquare(gridPosition.x).select(0x401010);
   }
 
   private onSquareOut = (gridPosition: Point) => {
@@ -42,7 +42,10 @@ export default class Grid extends Container {
   }
 
   private onSquareUp = (gridPosition: Point) => {
-    this.getFirstEmptySquare(gridPosition.x).addToken(0xff2020);
+    const square = this.getFirstEmptySquare(gridPosition.x);
+    square.addToken(0xff0000)
+    square.unselect();
+    this.onSquareOver(gridPosition);
   }
 
   private getSquare(x: number, y: number) {

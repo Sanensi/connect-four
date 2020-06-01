@@ -1,12 +1,12 @@
 import { Graphics, Container, Rectangle } from "pixi.js";
 
 export default class Square extends Container {
-  private shape: PIXI.Graphics;
+  private shape = new Graphics();
+  private selection = new Graphics();
 
   private size: number;
   private holeBorderWidth: number;
   private color: number = 0x2020ff;
-  private selectedColor: number = 0xC0C0C0;
 
   private _gridPosition: PIXI.Point;
   private _hasToken = false;
@@ -22,12 +22,11 @@ export default class Square extends Container {
   constructor(size: number, holeBorderWidth: number, gridPosition: PIXI.Point) {
     super();
 
-    this.shape = new Graphics();
-
     this.size = size;
     this.holeBorderWidth = holeBorderWidth;
     this.sortableChildren = true;
     this.drawShape(this.color);
+    this.addChild(this.selection);
     this.addChild(this.shape);
 
     this._gridPosition = gridPosition;
@@ -39,24 +38,16 @@ export default class Square extends Container {
     this.addListener('pointerup', this.onPointerUp);
   }
 
-  private onPointerOver() {
-    this.emit('square-over', this.gridPosition);
-  }
+  public select(color: number) {
+    this.selection.beginFill(color);
+    this.selection.drawRect(0, 0, this.size, this.size);
+    this.selection.endFill();
 
-  private onPointerOut() {
-    this.emit('square-out', this.gridPosition);
-  }
-
-  private onPointerUp() {
-    this.emit('square-up', this.gridPosition)
-  }
-
-  public select() {
-    this.drawShape(this.selectedColor);
+    this.selection.zIndex = 0;
   }
 
   public unselect() {
-    this.drawShape(this.color);
+    this.selection.clear();
   }
 
   public addToken(color: number) {
@@ -69,6 +60,18 @@ export default class Square extends Container {
 
     token.zIndex = 0;
     this.addChild(token);
+  }
+
+  private onPointerOver() {
+    this.emit('square-over', this.gridPosition);
+  }
+
+  private onPointerOut() {
+    this.emit('square-out', this.gridPosition);
+  }
+
+  private onPointerUp() {
+    this.emit('square-up', this.gridPosition)
   }
 
   private drawShape(color: number) {

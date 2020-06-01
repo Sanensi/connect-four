@@ -1,13 +1,13 @@
 {
   "name": "connect-four",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple webgl game using PixiJS",
   "main": "index.js",
   "scripts": {
     "serve:dev": "webpack-dev-server --env.NODE_ENV=dev --progress --color --open --hot -d"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "William Picard",
+  "license": "MIT",
   "dependencies": {
     "pixi.js": "^5.2.4"
   },
