@@ -46,6 +46,7 @@ export default class Grid extends Container {
     square.addToken(0xff0000)
     square.unselect();
     this.onSquareOver(gridPosition);
+    this.emit('column-click', gridPosition.x);
   }
 
   private getSquare(x: number, y: number) {
@@ -59,7 +60,7 @@ export default class Grid extends Container {
         return square;
       }
     }
-    return undefined;
+    throw new NoEmptySquareError(`Column ${x} has no empty square`);
   }
 
   public resize(width: number, height: number) {
@@ -69,5 +70,12 @@ export default class Grid extends Container {
     this.height = width/height < proportion ? width/proportion: height;
 
     this.position.set(width/2, height/2);
+  }
+}
+
+class NoEmptySquareError extends Error {
+  constructor(message?: string) {
+    super(message);
+    this.name = 'NoEmptySquareError';
   }
 }

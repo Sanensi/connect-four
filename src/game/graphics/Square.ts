@@ -8,12 +8,8 @@ export default class Square extends Container {
   private holeBorderWidth: number;
   private color: number = 0x2020ff;
 
-  private _gridPosition: PIXI.Point;
+  readonly gridPosition: PIXI.Point;
   private _hasToken = false;
-
-  public get gridPosition() {
-    return this._gridPosition;
-  }
 
   public get hasToken() {
     return this._hasToken;
@@ -29,7 +25,7 @@ export default class Square extends Container {
     this.addChild(this.selection);
     this.addChild(this.shape);
 
-    this._gridPosition = gridPosition;
+    this.gridPosition = gridPosition;
 
     this.interactive = true;
     this.hitArea = new Rectangle(0, 0, size, size);

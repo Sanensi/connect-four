@@ -1,8 +1,10 @@
 import Grid from './graphics/Grid';
+import GameState from './logic/GameState';
 
 export default class Game {
   private app: PIXI.Application;
   private grid = new Grid(7, 6);
+  private state = new GameState();
 
   constructor(app: PIXI.Application) {
     this.app = app;
@@ -13,6 +15,11 @@ export default class Game {
 
   private setup() {
     this.app.stage.addChild(this.grid);
+    this.grid.addListener('column-click', this.onColumnClick);
+  }
+
+  private onColumnClick = (x: number) => {
+    this.state.clickColumn(x);
   }
 
   private update = (delta: number) => {
