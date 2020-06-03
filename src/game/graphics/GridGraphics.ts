@@ -1,8 +1,8 @@
 import { Container, Point } from "pixi.js";
-import Square from "./Square";
+import SquareGraphics from "./SquareGraphics";
 
-export default class Grid extends Container {
-  private squares: Square[] = [];
+export default class GridGraphics extends Container {
+  private squares: SquareGraphics[] = [];
   private gridHeight: number;
   private gridWidth: number;
 
@@ -17,7 +17,7 @@ export default class Grid extends Container {
 
     for (let y = 0; y < gridHeight; y++) {
       for (let x = 0; x < gridWidth; x++) {
-        const square = new Square(square_size, holeBorder, new Point(x, y));
+        const square = new SquareGraphics(square_size, holeBorder, new Point(x, y));
         square.position.set(x * square_size, y * square_size);
         this.squares.push(square);
         square.addListener('square-over', this.onSquareOver);

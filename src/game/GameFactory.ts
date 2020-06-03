@@ -1,6 +1,6 @@
 import Game from "./Game";
 import Grid from "./logic/grid/Grid";
-import GridGraphics from "./graphics/Grid"
+import GridGraphics from "./graphics/GridGraphics"
 import GameState from "./logic/GameState";
 
 export default class GameFactory {

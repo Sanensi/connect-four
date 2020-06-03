@@ -1,12 +1,12 @@
-import Grid from './graphics/Grid';
+import GridGraphics from './graphics/GridGraphics';
 import GameState from './logic/GameState';
 
 export default class Game {
   private app: PIXI.Application;
-  private grid: Grid;
+  private grid: GridGraphics;
   private state: GameState;
 
-  constructor(app: PIXI.Application, state: GameState, grid: Grid) {
+  constructor(app: PIXI.Application, state: GameState, grid: GridGraphics) {
     this.app = app;
     this.state = state;
     this.grid = grid;

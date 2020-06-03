@@ -1,6 +1,6 @@
 import { Graphics, Container, Rectangle } from "pixi.js";
 
-export default class Square extends Container {
+export default class SquareGraphics extends Container {
   private shape = new Graphics();
   private selection = new Graphics();
 
