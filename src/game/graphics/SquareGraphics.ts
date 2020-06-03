@@ -15,7 +15,7 @@ export default class SquareGraphics extends Container {
     return this._hasToken;
   }
 
-  constructor(size: number, holeBorderWidth: number, gridPosition: PIXI.Point) {
+  constructor(size: number, holeBorderWidth: number) {
     super();
 
     this.size = size;
@@ -25,13 +25,13 @@ export default class SquareGraphics extends Container {
     this.addChild(this.selection);
     this.addChild(this.shape);
 
-    this.gridPosition = gridPosition;
+    // this.gridPosition = gridPosition;
 
     this.interactive = true;
     this.hitArea = new Rectangle(0, 0, size, size);
-    this.addListener('pointerover', this.onPointerOver);
-    this.addListener('pointerout', this.onPointerOut);
-    this.addListener('pointerup', this.onPointerUp);
+    // this.addListener('pointerover', this.onPointerOver);
+    // this.addListener('pointerout', this.onPointerOut);
+    // this.addListener('pointerup', this.onPointerUp);
   }
 
   public select(color: number) {
@@ -58,17 +58,17 @@ export default class SquareGraphics extends Container {
     this.addChild(token);
   }
 
-  private onPointerOver() {
-    this.emit('square-over', this.gridPosition);
-  }
+  // private onPointerOver() {
+  //   this.emit('square-over', this.gridPosition);
+  // }
 
-  private onPointerOut() {
-    this.emit('square-out', this.gridPosition);
-  }
+  // private onPointerOut() {
+  //   this.emit('square-out', this.gridPosition);
+  // }
 
-  private onPointerUp() {
-    this.emit('square-up', this.gridPosition)
-  }
+  // private onPointerUp() {
+  //   this.emit('square-up', this.gridPosition)
+  // }
 
   private drawShape(color: number) {
     const center = this.size/2;

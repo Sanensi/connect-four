@@ -2,20 +2,14 @@ import Square from "./Square";
 import Token from "../player/Token";
 
 export default class Grid {
-  private squares: Square[] = [];
+  private squares: Square[];
   private width: number;
   private height: number;
 
-  constructor(width: number, height: number) {
+  constructor(squares: Square[], width: number, height: number) {
+    this.squares = squares
     this.width = width;
     this.height = height;
-
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        const square = new Square(x, y);
-        this.squares.push(square);
-      }
-    }
   }
 
   public addToken(x: number, token: Token) {
