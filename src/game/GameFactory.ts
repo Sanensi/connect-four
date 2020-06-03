@@ -3,7 +3,8 @@ import Grid from "./logic/grid/Grid";
 import GridGraphics from "./graphics/GridGraphics"
 import GameState from "./logic/GameState";
 import SquareGraphics from "./graphics/SquareGraphics";
-import Square from "./logic/grid/Square";
+import Square from "./logic/grid/square/Square";
+import { Point } from "pixi.js";
 
 export default class GameFactory {
   public createGame(app: PIXI.Application, gridWidth: number, gridHeight: number) {
@@ -22,15 +23,12 @@ export default class GameFactory {
 
     for (let y = 0; y < gridHeight; y++) {
       for (let x = 0; x < gridWidth; x++) {
-        const square_g = new SquareGraphics(squareSize, holeBorder);
+        const square_l = new Square(new Point(x, y));
+        squares.push(square_l);
+
+        const square_g = new SquareGraphics(squareSize, holeBorder, square_l);
         square_g.position.set(x * squareSize, y * squareSize);
         squaresGraphics.push(square_g);
-        // square.addListener('square-over', this.onSquareOver);
-        // square.addListener('square-out', this.onSquareOut);
-        // square.addListener('square-up', this.onSquareUp);
-
-        const square_l = new Square(x, y);
-        squares.push(square_l);
       }
     }
 

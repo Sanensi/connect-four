@@ -14,8 +14,8 @@ export default class GameState {
     this.grid = grid;
   }
 
-  public clickColumn(x: number) {
-    this.grid.addToken(x, this.currentPlayer.token);
-    this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.playerQueue.length;
-  }
+  // public clickColumn(x: number) {
+  //   this.grid.addToken(x, this.currentPlayer.token);
+  //   this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.playerQueue.length;
+  // }
 }

@@ -1,20 +1,38 @@
-import Square from "./Square";
 import Token from "../player/Token";
+import SquareObservableLogic from "./square/SquareObservableLogic";
+import { Point } from "pixi.js";
 
 export default class Grid {
-  private squares: Square[];
+  private squares: SquareObservableLogic[];
   private width: number;
   private height: number;
 
-  constructor(squares: Square[], width: number, height: number) {
+  constructor(squares: SquareObservableLogic[], width: number, height: number) {
     this.squares = squares
     this.width = width;
     this.height = height;
+
+    this.squares.forEach(square => {
+      square.onOver = this.onSquareOver;
+      square.onOut = this.onSquareOut;
+      square.onUp = this.onSquareUp
+    });
   }
 
-  public addToken(x: number, token: Token) {
-    const square = this.getFirstEmptySquare(x);
-    square.setToken(token);
+  private onSquareOver = (position: Point) => {
+    this.getFirstEmptySquare(position.x).highlight(0x401010);
+  }
+
+  private onSquareOut = (position: Point) => {
+    for (let y = 0; y < this.height; y++) {
+      this.getSquare(position.x, y).UnHighlight();
+    }
+  }
+
+  private onSquareUp = (position: Point) => {
+    const square = this.getFirstEmptySquare(position.x);
+    square.setToken(new Token());
+    this.onSquareOver(position);
   }
 
   private getSquare(x: number, y: number) {
@@ -22,7 +40,7 @@ export default class Grid {
   }
 
   private getFirstEmptySquare(x: number) {
-    for (let y = this.height-1; y >= 0; y--) {
+    for (let y = this.height - 1; y >= 0; y--) {
       const square = this.getSquare(x, y)
       if (!square.hasToken) {
         return square;

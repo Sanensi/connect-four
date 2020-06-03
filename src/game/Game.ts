@@ -12,14 +12,9 @@ export default class Game {
     this.grid = grid;
     
     this.app.stage.addChild(this.grid);
-    this.grid.addListener('column-click', this.onColumnClick);
 
     this.resize();
     this.app.ticker.add(this.update);
-  }
-
-  private onColumnClick = (x: number) => {
-    this.state.clickColumn(x);
   }
 
   private update = (delta: number) => {
