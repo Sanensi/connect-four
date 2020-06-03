@@ -3,20 +3,20 @@ import Square from "./Square";
 
 export default class Grid extends Container {
   private squares: Square[] = [];
-  private rows: number;
-  private columns: number;
+  private gridHeight: number;
+  private gridWidth: number;
 
-  constructor(columns: number, rows: number) {
+  constructor(gridWidth: number, gridHeight: number) {
     super();
 
-    this.columns = columns;
-    this.rows = rows;
+    this.gridWidth = gridWidth;
+    this.gridHeight = gridHeight;
 
     const square_size = 10;
     const holeBorder = 0.25;
 
-    for (let y = 0; y < rows; y++) {
-      for (let x = 0; x < columns; x++) {
+    for (let y = 0; y < gridHeight; y++) {
+      for (let x = 0; x < gridWidth; x++) {
         const square = new Square(square_size, holeBorder, new Point(x, y));
         square.position.set(x * square_size, y * square_size);
         this.squares.push(square);
@@ -36,7 +36,7 @@ export default class Grid extends Container {
   }
 
   private onSquareOut = (gridPosition: Point) => {
-    for (let y = 0; y < this.rows; y++) {
+    for (let y = 0; y < this.gridHeight; y++) {
       this.getSquare(gridPosition.x, y).unselect();
     }
   }
@@ -50,11 +50,11 @@ export default class Grid extends Container {
   }
 
   private getSquare(x: number, y: number) {
-    return this.squares[x + y * this.columns];
+    return this.squares[x + y * this.gridWidth];
   }
 
   private getFirstEmptySquare(x: number) {
-    for (let y = this.rows-1; y >= 0; y--) {
+    for (let y = this.gridHeight-1; y >= 0; y--) {
       const square = this.getSquare(x, y)
       if (!square.hasToken) {
         return square;
@@ -64,7 +64,7 @@ export default class Grid extends Container {
   }
 
   public resize(width: number, height: number) {
-    const proportion = this.columns / this.rows;
+    const proportion = this.gridWidth / this.gridHeight;
 
     this.width = width/height < proportion ? width : height*proportion;
     this.height = width/height < proportion ? width/proportion: height;

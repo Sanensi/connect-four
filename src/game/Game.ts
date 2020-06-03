@@ -3,19 +3,19 @@ import GameState from './logic/GameState';
 
 export default class Game {
   private app: PIXI.Application;
-  private grid = new Grid(7, 6);
-  private state = new GameState();
+  private grid: Grid;
+  private state: GameState;
 
-  constructor(app: PIXI.Application) {
+  constructor(app: PIXI.Application, state: GameState, grid: Grid) {
     this.app = app;
-    this.setup();
-    this.resize();
-    this.app.ticker.add(this.update);
-  }
-
-  private setup() {
+    this.state = state;
+    this.grid = grid;
+    
     this.app.stage.addChild(this.grid);
     this.grid.addListener('column-click', this.onColumnClick);
+
+    this.resize();
+    this.app.ticker.add(this.update);
   }
 
   private onColumnClick = (x: number) => {
