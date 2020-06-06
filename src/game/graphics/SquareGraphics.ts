@@ -24,10 +24,7 @@ export default class SquareGraphics extends Container {
 
     state.onHighlight = this.setHoleColor;
     state.onUnHighlight = this.clearHole;
-    state.onSetToken = (color: number) => {
-      this.setHoleColor(color);
-      state.onUnHighlight = () => {};
-    };
+    state.onSetToken = this.setHoleColor;
 
     this.addListener('pointerover', state.over);
     this.addListener('pointerout', state.out);

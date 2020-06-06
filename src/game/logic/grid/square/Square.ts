@@ -37,6 +37,9 @@ export default class Square implements SquareObservableLogic, SquareObservableGr
     }
     this.token = token;
     this.onSetToken(0xff0000);
+    this.onHighlight = () => {};
+    this.onUnHighlight = () => {};
+    this.onSetToken = () => {};
   }
 
   over = () => {
