@@ -4,7 +4,13 @@ import Component from "../../Component";
 import Token from "../../player/Token";
 import SquareObservableGraphics from "./SquareObservableGraphics";
 
-export default class Square extends Component implements SquareObservableGraphics {
+interface SquareEvents {
+  squareOver: Point;
+  squareOut: Point;
+  squareUp: Point;
+}
+
+export default class Square extends Component<SquareEvents> implements SquareObservableGraphics {
   private position: Point;
   private token: Token;
 

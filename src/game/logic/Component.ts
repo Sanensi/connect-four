@@ -1,9 +1,9 @@
-import { EventEmitter } from "events";
+import { TypedEventEmitter, EventMap, EventKey } from "../../utils/TypedEventEmitter";
 
-export default class Component extends EventEmitter {
-  private parent: Component;
+export default class Component<E extends EventMap = {}> extends TypedEventEmitter<E> {
+  private parent: Component<any>;
 
-  constructor(...childs: Component[]) {
+  constructor(...childs: Component<any>[]) {
     super();
     
     childs.forEach(child => {
@@ -17,7 +17,7 @@ export default class Component extends EventEmitter {
    * 
    * If this component is not listening to this event, then it propagates it to it's parent.
    */
-  emit(eventName: string | symbol , ...args) {
-    return super.emit(eventName, ...args) || this.parent.emit(eventName, ...args);
+  emit<K extends EventKey<E>>(eventName: K, params: E[K]) {
+    return super.emit(eventName, params) || this.parent.emit(eventName, params);
   }
 }
