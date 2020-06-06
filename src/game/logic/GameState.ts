@@ -1,8 +1,9 @@
 import Grid from "./grid/Grid";
 import Player from "./player/Player";
+import Component from "./Component";
 
-export default class GameState {
-  private grid;
+export default class GameState extends Component {
+  private grid: Grid;
   private playerQueue = [new Player(), new Player()];
   private currentPlayerIndex = 0;
 
@@ -11,6 +12,7 @@ export default class GameState {
   }
 
   constructor(grid: Grid) {
+    super(grid);
     this.grid = grid;
   }
 

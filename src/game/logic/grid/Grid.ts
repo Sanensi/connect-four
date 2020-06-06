@@ -1,13 +1,16 @@
-import Token from "../player/Token";
-import SquareObservableLogic from "./square/SquareObservableLogic";
 import { Point } from "pixi.js";
 
-export default class Grid {
-  private squares: SquareObservableLogic[];
+import Token from "../player/Token";
+import Squares from "./square/Square";
+import Component from "../Component";
+
+export default class Grid extends Component {
+  private squares: Squares[];
   private width: number;
   private height: number;
 
-  constructor(squares: SquareObservableLogic[], width: number, height: number) {
+  constructor(squares: Squares[], width: number, height: number) {
+    super(...squares);
     this.squares = squares
     this.width = width;
     this.height = height;

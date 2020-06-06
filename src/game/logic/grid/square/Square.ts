@@ -1,9 +1,10 @@
-import Token from "../../player/Token";
-import SquareObservableGraphics from "./SquareObservableGraphics";
-import SquareObservableLogic from "./SquareObservableLogic";
 import { Point } from "pixi.js";
 
-export default class Square implements SquareObservableLogic, SquareObservableGraphics {
+import Component from "../../Component";
+import Token from "../../player/Token";
+import SquareObservableGraphics from "./SquareObservableGraphics";
+
+export default class Square extends Component implements SquareObservableGraphics {
   private position: Point;
   private token: Token;
 
@@ -20,6 +21,7 @@ export default class Square implements SquareObservableLogic, SquareObservableGr
   }
 
   constructor(position: Point) {
+    super();
     this.position = position;
   }
   
