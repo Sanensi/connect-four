@@ -1,10 +1,13 @@
 import { Point } from "pixi.js";
 
 import Token from "../player/Token";
-import Squares from "./square/Square";
+import Squares, { SquareEvents } from "./square/Square";
 import Component from "../Component";
 
-export default class Grid extends Component {
+export interface GridEvents extends SquareEvents {
+}
+
+export default class Grid extends Component<GridEvents> {
   private squares: Squares[];
   private width: number;
   private height: number;

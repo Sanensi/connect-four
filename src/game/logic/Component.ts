@@ -17,7 +17,7 @@ export default class Component<E extends EventMap = {}> extends TypedEventEmitte
    * 
    * If this component is not listening to this event, then it propagates it to it's parent.
    */
-  emit<K extends EventKey<E>>(eventName: K, params: E[K]) {
+  emit<K extends EventKey<E>>(eventName: K, params: E[K]): boolean {
     return super.emit(eventName, params) || this.parent.emit(eventName, params);
   }
 }

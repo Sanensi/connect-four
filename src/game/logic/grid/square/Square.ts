@@ -4,7 +4,7 @@ import Component from "../../Component";
 import Token from "../../player/Token";
 import SquareObservableGraphics from "./SquareObservableGraphics";
 
-interface SquareEvents {
+export interface SquareEvents {
   squareOver: Point;
   squareOut: Point;
   squareUp: Point;
