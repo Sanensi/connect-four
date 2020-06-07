@@ -48,7 +48,7 @@ export default class Square extends Component<SquareEvents & SquareGraphicEvents
       throw new AlreadyOccupiedError(`Square at ${this.position} already has a token`);
     }
     this.token = token;
-    this.emit('setToken', 0xff0000);
+    this.emit('setToken', token.baseColor);
 
     this.removeAllListeners('highlight');
     this.removeAllListeners('unHighlight');

@@ -6,12 +6,15 @@ import Grid from "./logic/grid/Grid";
 import Square from "./logic/grid/Square";
 import GridGraphics from "./graphics/GridGraphics"
 import SquareGraphics from "./graphics/SquareGraphics";
+import Player from "./logic/player/Player";
+import Token from "./logic/player/Token";
 
 export default class GameFactory {
   public createGame(app: PIXI.Application, gridWidth: number, gridHeight: number) {
     const { grid, gridGraphics } = this.createGridDuo(gridWidth, gridHeight);
+    const playerQueue = this.createPlayerQueue();
+    const gameState = new GameState(grid, playerQueue);
 
-    const gameState = new GameState(grid);
     return new Game(app, gameState, gridGraphics);
   }
 
@@ -37,5 +40,12 @@ export default class GameFactory {
       grid: new Grid(squares, gridWidth, gridHeight),
       gridGraphics: new GridGraphics(squaresGraphics, gridWidth, gridHeight)
     };
+  }
+
+  private createPlayerQueue() {
+    return [
+      new Player(new Token(0xff0000, 0x401010)),
+      new Player(new Token(0xffff00, 0x404010))
+    ];
   }
 }

@@ -9,32 +9,33 @@ interface GameEvent {
 
 export default class GameState extends Component<GameEvent> {
   private grid: Grid;
-  private playerQueue = [new Player(), new Player()];
-  private currentPlayerIndex = 0;
+  private playerQueue: Player[];
+  private currentPlayerIndex: number = 0;
 
   private get currentPlayer() {
     return this.playerQueue[this.currentPlayerIndex];
   }
 
-  constructor(grid: Grid) {
+  constructor(grid: Grid, playerQueue: Player[]) {
     super(grid);
     this.grid = grid;
     this.grid.on('squareOver', this.onSquareOver);
     this.grid.on('squareUp', this.onSquareUp);
+
+    this.playerQueue = playerQueue;
   }
 
   private onSquareOver = (position: Point) => {
-    this.grid.getFirstEmptySquare(position.x).highlight(0x401010);
+    this.grid.getFirstEmptySquare(position.x).highlight(this.currentPlayer.token.highlightColor);
   }
 
   private onSquareUp = (position: Point) => {
-    const square = this.grid.getFirstEmptySquare(position.x);
-    square.setToken(new Token());
+    this.grid.getFirstEmptySquare(position.x).setToken(this.currentPlayer.token);
+    this.nextPlayer();
     this.onSquareOver(position);
   }
 
-  // public clickColumn(x: number) {
-  //   this.grid.addToken(x, this.currentPlayer.token);
-  //   this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.playerQueue.length;
-  // }
+  private nextPlayer() {
+    this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.playerQueue.length;
+  }
 }
