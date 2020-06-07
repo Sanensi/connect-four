@@ -4,7 +4,7 @@ import Component from "../Component";
 import Token from "../player/Token";
 import { Emitter } from "../../../utils/TypedEventEmitter";
 
-export interface SquareEvents {
+interface SquareEvents {
   squareOver: Point;
   squareOut: Point;
   squareUp: Point;
@@ -56,15 +56,15 @@ export default class Square extends Component<SquareEvents & SquareGraphicEvents
   }
 
   over = () => {
-    this.emit('squareOver', this.position);
+    this.emit('squareOver', this.position, true);
   }
 
   out = () => {
-    this.emit('squareOut', this.position);
+    this.emit('squareOut', this.position, true);
   }
 
   up = () => {
-    this.emit('squareUp', this.position);
+    this.emit('squareUp', this.position, true);
   }
 }
 

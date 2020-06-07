@@ -13,8 +13,8 @@ export default class Component<E extends EventMap = {}> extends TypedEventEmitte
 
   emit<K extends EventKey<E>>(eventName: K, params?: E[K], bubbleUp: boolean = false): boolean {
     let wasListened = super.emit(eventName, params);
-    if (bubbleUp) {
-      wasListened = this.parent.emit(eventName, params, bubbleUp) || wasListened;
+    if (bubbleUp && !wasListened) {
+      wasListened = this.parent.emit(eventName, params, bubbleUp);
     }
     return wasListened;
   }

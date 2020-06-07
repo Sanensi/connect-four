@@ -1,5 +1,6 @@
 import { EventEmitter } from "events";
 
+// Credit: https://rjzaworski.com/2019/10/event-emitters-in-typescript
 export type EventMap = Record<string, any>;
 
 export type EventKey<T extends EventMap> = string & keyof T;

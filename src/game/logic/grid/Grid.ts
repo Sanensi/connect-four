@@ -1,10 +1,11 @@
 import { Point } from "pixi.js";
 
-import Token from "../player/Token";
 import Squares from "./Square";
 import Component from "../Component";
 
-export interface GridEvents {
+interface GridEvents {
+  squareOver: Point;
+  squareUp: Point;
 }
 
 export default class Grid extends Component<GridEvents> {
@@ -19,14 +20,8 @@ export default class Grid extends Component<GridEvents> {
     this.height = height;
 
     this.squares.forEach(square => {
-      square.on('squareOver', this.onSquareOver);
       square.on('squareOut', this.onSquareOut);
-      square.on('squareUp', this.onSquareUp);
     });
-  }
-
-  private onSquareOver = (position: Point) => {
-    this.getFirstEmptySquare(position.x).highlight(0x401010);
   }
 
   private onSquareOut = (position: Point) => {
@@ -35,19 +30,13 @@ export default class Grid extends Component<GridEvents> {
     }
   }
 
-  private onSquareUp = (position: Point) => {
-    const square = this.getFirstEmptySquare(position.x);
-    square.setToken(new Token());
-    this.onSquareOver(position);
-  }
-
-  private getSquare(x: number, y: number) {
+  public getSquare(x: number, y: number) {
     return this.squares[x + y * this.width];
   }
 
-  private getFirstEmptySquare(x: number) {
+  public getFirstEmptySquare(x: number) {
     for (let y = this.height - 1; y >= 0; y--) {
-      const square = this.getSquare(x, y)
+      const square = this.getSquare(x, y);
       if (!square.hasToken) {
         return square;
       }
