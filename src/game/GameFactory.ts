@@ -3,7 +3,7 @@ import { Point } from "pixi.js";
 import Game from "./Game";
 import GameState from "./logic/GameState";
 import Grid from "./logic/grid/Grid";
-import Square from "./logic/grid/square/Square";
+import Square from "./logic/grid/Square";
 import GridGraphics from "./graphics/GridGraphics"
 import SquareGraphics from "./graphics/SquareGraphics";
 

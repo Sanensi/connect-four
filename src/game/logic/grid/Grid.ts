@@ -1,10 +1,10 @@
 import { Point } from "pixi.js";
 
 import Token from "../player/Token";
-import Squares, { SquareEvents } from "./square/Square";
+import Squares from "./Square";
 import Component from "../Component";
 
-export interface GridEvents extends SquareEvents {
+export interface GridEvents {
 }
 
 export default class Grid extends Component<GridEvents> {
@@ -19,9 +19,9 @@ export default class Grid extends Component<GridEvents> {
     this.height = height;
 
     this.squares.forEach(square => {
-      square.onOver = this.onSquareOver;
-      square.onOut = this.onSquareOut;
-      square.onUp = this.onSquareUp
+      square.on('squareOver', this.onSquareOver);
+      square.on('squareOut', this.onSquareOut);
+      square.on('squareUp', this.onSquareUp);
     });
   }
 

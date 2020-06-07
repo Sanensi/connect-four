@@ -1,5 +1,5 @@
 import { Graphics, Container, Rectangle } from "pixi.js";
-import SquareObservableGraphics from "../logic/grid/square/SquareObservableGraphics";
+import { SquareInteractions } from "../logic/grid/Square";
 
 export default class SquareGraphics extends Container {
   private shape = new Graphics();
@@ -9,7 +9,7 @@ export default class SquareGraphics extends Container {
   private holeBorderWidth: number;
   private color: number = 0x2020ff;
 
-  constructor(size: number, holeBorderWidth: number, state: SquareObservableGraphics) {
+  constructor(size: number, holeBorderWidth: number, state: SquareInteractions) {
     super();
 
     this.size = size;
@@ -22,13 +22,17 @@ export default class SquareGraphics extends Container {
     this.interactive = true;
     this.hitArea = new Rectangle(0, 0, size, size);
 
-    state.onHighlight = this.setHoleColor;
-    state.onUnHighlight = this.clearHole;
-    state.onSetToken = this.setHoleColor;
+    state.on('highlight', this.setHoleColor);
+    state.on('unHighlight', this.clearHole);
+    state.on('setToken', this.setHoleColor);
 
     this.addListener('pointerover', state.over);
     this.addListener('pointerout', state.out);
-    this.addListener('pointerup', state.up);
+    this.addListener('pointerup', (e) => {
+      if (e.data.button === 0) {
+        state.up();
+      }
+    });
   }
 
   private setHoleColor = (color: number) => {
@@ -44,7 +48,7 @@ export default class SquareGraphics extends Container {
   }
 
   private drawShape(color: number) {
-    const center = this.size/2;
+    const center = this.size / 2;
 
     this.shape.clear();
     this.shape.beginFill(color);
