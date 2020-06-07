@@ -1,10 +1,11 @@
-import Game from "./Game";
-import Grid from "./logic/grid/Grid";
-import GridGraphics from "./graphics/GridGraphics"
-import GameState from "./logic/GameState";
-import SquareGraphics from "./graphics/SquareGraphics";
-import Square from "./logic/grid/square/Square";
 import { Point } from "pixi.js";
+
+import Game from "./Game";
+import GameState from "./logic/GameState";
+import Grid from "./logic/grid/Grid";
+import Square from "./logic/grid/Square";
+import GridGraphics from "./graphics/GridGraphics"
+import SquareGraphics from "./graphics/SquareGraphics";
 
 export default class GameFactory {
   public createGame(app: PIXI.Application, gridWidth: number, gridHeight: number) {
