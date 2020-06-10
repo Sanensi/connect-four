@@ -24,6 +24,7 @@ export default class SquareGraphics extends Container {
 
     state.on('highlight', this.setHoleColor);
     state.on('unHighlight', this.clearHole);
+    state.on('setColor', this.drawShape);
     state.on('setToken', this.setHoleColor);
 
     this.addListener('pointerover', state.over);
@@ -47,7 +48,7 @@ export default class SquareGraphics extends Container {
     this.hole.clear();
   }
 
-  private drawShape(color: number) {
+  private drawShape = (color: number) => {
     const center = this.size / 2;
 
     this.shape.clear();

@@ -2,9 +2,9 @@ import Grid from "./grid/Grid";
 import Player from "./player/Player";
 import Component from "./Component";
 import { Point } from "pixi.js";
-import Token from "./player/Token";
 
 interface GameEvent {
+  gameOver: void;
 }
 
 export default class GameState extends Component<GameEvent> {
@@ -30,7 +30,15 @@ export default class GameState extends Component<GameEvent> {
   }
 
   private onSquareUp = (position: Point) => {
-    this.grid.getFirstEmptySquare(position.x).setToken(this.currentPlayer.token);
+    let connections = this.grid.dropToken(position.x, this.currentPlayer.token);
+    connections = connections.filter(c => c.length >= 4);
+
+    if (connections.length > 0) {
+      connections.forEach(squares => {
+        squares.forEach(square => square.setColor(0x10C010));
+      });
+    }
+
     this.nextPlayer();
     this.onSquareOver(position);
   }

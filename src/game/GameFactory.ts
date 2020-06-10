@@ -15,7 +15,7 @@ export default class GameFactory {
     const playerQueue = this.createPlayerQueue();
     const gameState = new GameState(grid, playerQueue);
 
-    return new Game(app, gameState, gridGraphics);
+    return new Game(app, gridGraphics, gameState);
   }
 
   private createGridDuo(gridWidth: number, gridHeight: number) {

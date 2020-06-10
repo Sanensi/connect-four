@@ -6,12 +6,12 @@ export default class Game {
   private grid: GridGraphics;
   private state: GameState;
 
-  constructor(app: PIXI.Application, state: GameState, grid: GridGraphics) {
+  constructor(app: PIXI.Application, grid: GridGraphics, state: GameState) {
     this.app = app;
-    this.state = state;
     this.grid = grid;
-    
     this.app.stage.addChild(this.grid);
+
+    this.state = state;
 
     this.resize();
     this.app.ticker.add(this.update);

@@ -13,6 +13,7 @@ interface SquareEvents {
 interface SquareGraphicEvents {
   highlight: number;
   unHighlight: void;
+  setColor: number;
   setToken: number;
 }
 
@@ -23,31 +24,43 @@ export interface SquareInteractions extends Emitter<SquareGraphicEvents> {
 }
 
 export default class Square extends Component<SquareEvents & SquareGraphicEvents> implements SquareInteractions {
-  private position: Point;
-  private token: Token;
+  private _position: Point;
+  private _token: Token;
 
-  get hasToken() {
-    return this.token !== undefined;
+  public get position() {
+    return this._position.clone();
+  }
+
+  public get token() {
+    return this._token;
+  }
+
+  public get hasToken() {
+    return this._token !== undefined;
   }
 
   constructor(position: Point) {
     super();
-    this.position = position;
+    this._position = position;
   }
   
-  highlight = (color: number) => {
+  public highlight = (color: number) => {
     this.emit('highlight', color);
   }
 
-  UnHighlight = () => {
+  public UnHighlight = () => {
     this.emit('unHighlight');
   }
 
-  setToken = (token: Token) => {
+  public setColor = (color: number) => {
+    this.emit('setColor', color);
+  }
+
+  public setToken = (token: Token) => {
     if (this.hasToken) {
-      throw new AlreadyOccupiedError(`Square at ${this.position} already has a token`);
+      throw new AlreadyOccupiedError(`Square at ${this._position} already has a token`);
     }
-    this.token = token;
+    this._token = token;
     this.emit('setToken', token.baseColor);
 
     this.removeAllListeners('highlight');
@@ -55,16 +68,16 @@ export default class Square extends Component<SquareEvents & SquareGraphicEvents
     this.removeAllListeners('setToken');
   }
 
-  over = () => {
-    this.emit('squareOver', this.position, true);
+  public over = () => {
+    this.emit('squareOver', this._position, true);
   }
 
-  out = () => {
-    this.emit('squareOut', this.position, true);
+  public out = () => {
+    this.emit('squareOut', this._position);
   }
 
-  up = () => {
-    this.emit('squareUp', this.position, true);
+  public up = () => {
+    this.emit('squareUp', this._position, true);
   }
 }
 
