@@ -44,8 +44,8 @@ export default class GameFactory {
 
   private createPlayerQueue() {
     return [
-      new Player(new Token(0xff0000, 0x401010)),
-      new Player(new Token(0xffff00, 0x404010))
+      new Player('Red', new Token(0xff0000, 0x401010)),
+      new Player('Yellow', new Token(0xffff00, 0x404010))
     ];
   }
 }

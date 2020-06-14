@@ -46,10 +46,10 @@ export default class Grid extends Component<GridEvents> {
   }
 
   public dropToken(column: number, token: Token) {
-    const latestSquare = this.getFirstEmptySquare(column);
-    latestSquare.setToken(token);
+    const square = this.getFirstEmptySquare(column);
+    square.setToken(token);
 
-    return this.getConnections(latestSquare);
+    return this.getConnections(square);
   }
 
   private getConnections(square: Square) {
@@ -81,6 +81,10 @@ export default class Grid extends Component<GridEvents> {
     });
 
     return [...longestChain];
+  }
+
+  reset() {
+    this.squares.forEach(square => square.reset());
   }
 }
 

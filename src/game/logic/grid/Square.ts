@@ -79,6 +79,10 @@ export default class Square extends Component<SquareEvents & SquareGraphicEvents
   public up = () => {
     this.emit('squareUp', this._position, true);
   }
+
+  public reset(): void {
+    this._token = undefined;
+  }
 }
 
 class AlreadyOccupiedError extends Error {
