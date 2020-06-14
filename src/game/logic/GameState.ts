@@ -1,4 +1,4 @@
-import Grid from "./grid/Grid";
+import Grid, { NoEmptySquareError } from "./grid/Grid";
 import Player from "./player/Player";
 import Component from "./Component";
 import { Point } from "pixi.js";
@@ -26,7 +26,14 @@ export default class GameState extends Component<GameStateEvents> {
   }
 
   private onSquareOver = (position: Point) => {
-    this.grid.getFirstEmptySquare(position.x).highlight(this.currentPlayer.token.highlightColor);
+    try {
+      this.grid.getFirstEmptySquare(position.x).highlight(this.currentPlayer.token.highlightColor);
+    }
+    catch (error) {
+      if (!(error instanceof NoEmptySquareError)) {
+        throw error;
+      }
+    }
   }
 
   private onSquareUp = (position: Point) => {

@@ -88,7 +88,7 @@ export default class Grid extends Component<GridEvents> {
   }
 }
 
-class NoEmptySquareError extends Error {
+export class NoEmptySquareError extends Error {
   constructor(message?: string) {
     super(message);
     this.name = 'NoEmptySquareError';
