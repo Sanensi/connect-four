@@ -20,7 +20,6 @@ export class TypedEventEmitter<T extends EventMap> implements Emitter<T>, Receiv
 
   constructor(emitter: EventEmitter = new EventEmitter()) {
     this.emitter = emitter;
-    this.emitter.removeAllListeners()
   }
 
   emit<K extends EventKey<T>>(eventName: K, params?: T[K]) {

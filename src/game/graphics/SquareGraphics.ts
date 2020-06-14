@@ -7,7 +7,9 @@ export default class SquareGraphics extends Container {
 
   private size: number;
   private holeBorderWidth: number;
-  private color: number = 0x2020ff;
+  private baseColor: number = 0x2020ff;
+
+  private state: SquareInteractions;
 
   constructor(size: number, holeBorderWidth: number, state: SquareInteractions) {
     super();
@@ -15,22 +17,24 @@ export default class SquareGraphics extends Container {
     this.size = size;
     this.holeBorderWidth = holeBorderWidth;
     this.sortableChildren = true;
-    this.drawShape(this.color);
+    this.drawShape(this.baseColor);
     this.addChild(this.hole);
     this.addChild(this.shape);
 
     this.interactive = true;
     this.hitArea = new Rectangle(0, 0, size, size);
 
-    state.on('highlight', this.setHoleColor);
-    state.on('unHighlight', this.clearHole);
-    state.on('setToken', this.setHoleColor);
+    this.state = state;
+    this.state.on('highlight', this.setHoleColor);
+    this.state.on('unHighlight', this.clearHole);
+    this.state.on('setColor', this.drawShape);
+    this.state.on('setToken', this.setHoleColor);
 
-    this.addListener('pointerover', state.over);
-    this.addListener('pointerout', state.out);
+    this.addListener('pointerover', this.state.over);
+    this.addListener('pointerout', this.state.out);
     this.addListener('pointerup', (e) => {
       if (e.data.button === 0) {
-        state.up();
+        this.state.up();
       }
     });
   }
@@ -47,7 +51,7 @@ export default class SquareGraphics extends Container {
     this.hole.clear();
   }
 
-  private drawShape(color: number) {
+  private drawShape = (color: number) => {
     const center = this.size / 2;
 
     this.shape.clear();
@@ -59,5 +63,20 @@ export default class SquareGraphics extends Container {
     this.shape.endFill();
 
     this.shape.zIndex = 1;
+  }
+
+  public reset(): void {
+    this.state.off('highlight', this.setHoleColor);
+    this.state.off('unHighlight', this.clearHole);
+    this.state.off('setColor', this.drawShape);
+    this.state.off('setToken', this.setHoleColor);
+
+    this.state.on('highlight', this.setHoleColor);
+    this.state.on('unHighlight', this.clearHole);
+    this.state.on('setColor', this.drawShape);
+    this.state.on('setToken', this.setHoleColor);
+
+    this.clearHole();
+    this.drawShape(this.baseColor);
   }
 }

@@ -2,12 +2,14 @@ import { Container } from "pixi.js";
 import SquareGraphics from "./SquareGraphics";
 
 export default class GridGraphics extends Container {
+  private squares: SquareGraphics[];
   private gridHeight: number;
   private gridWidth: number;
 
   constructor(squares: SquareGraphics[], gridWidth: number, gridHeight: number) {
     super();
 
+    this.squares = squares;
     this.addChild(...squares);
 
     this.gridWidth = gridWidth;
@@ -24,5 +26,9 @@ export default class GridGraphics extends Container {
     this.height = width/height < proportion ? width/proportion: height;
 
     this.position.set(width/2, height/2);
+  }
+
+  public reset() {
+    this.squares.forEach(square => square.reset());
   }
 }

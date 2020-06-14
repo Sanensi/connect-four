@@ -2,39 +2,64 @@ import Grid from "./grid/Grid";
 import Player from "./player/Player";
 import Component from "./Component";
 import { Point } from "pixi.js";
-import Token from "./player/Token";
 
-interface GameEvent {
+interface GameStateEvents {
+  gameOver: Player;
 }
 
-export default class GameState extends Component<GameEvent> {
+export default class GameState extends Component<GameStateEvents> {
   private grid: Grid;
-  private playerQueue = [new Player(), new Player()];
-  private currentPlayerIndex = 0;
+  private playerQueue: Player[];
+  private currentPlayerIndex: number = 0;
 
   private get currentPlayer() {
     return this.playerQueue[this.currentPlayerIndex];
   }
 
-  constructor(grid: Grid) {
+  constructor(grid: Grid, playerQueue: Player[]) {
     super(grid);
     this.grid = grid;
     this.grid.on('squareOver', this.onSquareOver);
     this.grid.on('squareUp', this.onSquareUp);
+
+    this.playerQueue = playerQueue;
   }
 
   private onSquareOver = (position: Point) => {
-    this.grid.getFirstEmptySquare(position.x).highlight(0x401010);
+    this.grid.getFirstEmptySquare(position.x).highlight(this.currentPlayer.token.highlightColor);
   }
 
   private onSquareUp = (position: Point) => {
-    const square = this.grid.getFirstEmptySquare(position.x);
-    square.setToken(new Token());
-    this.onSquareOver(position);
+    let connections = this.grid.dropToken(position.x, this.currentPlayer.token);
+    connections = connections.filter(c => c.length >= 4);
+
+    if (connections.length > 0) {
+      this.grid.off("squareOver", this.onSquareOver);
+      this.grid.off("squareUp", this.onSquareUp);
+      
+      connections.forEach(squares => {
+        squares.forEach(square => square.setColor(0x10C010));
+      });
+
+      this.emit('gameOver', this.currentPlayer);
+    }
+    else {
+      this.nextPlayer();
+      this.onSquareOver(position);
+    }
   }
 
-  // public clickColumn(x: number) {
-  //   this.grid.addToken(x, this.currentPlayer.token);
-  //   this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.playerQueue.length;
-  // }
+  private nextPlayer() {
+    this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.playerQueue.length;
+  }
+
+  public reset = () => {
+    this.currentPlayerIndex = 0;
+    this.grid.reset();
+
+    this.grid.off("squareOver", this.onSquareOver);
+    this.grid.off("squareUp", this.onSquareUp);
+    this.grid.on('squareOver', this.onSquareOver);
+    this.grid.on('squareUp', this.onSquareUp);
+  }
 }
