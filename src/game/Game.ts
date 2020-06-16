@@ -8,14 +8,14 @@ export default class Game {
   private grid: GridGraphics;
   private state: GameState;
 
-  private gameOverWindow = new WinnerWindow();
+  private winnerWindow = new WinnerWindow();
 
   constructor(app: PIXI.Application, grid: GridGraphics, state: GameState) {
     this.app = app;
     this.grid = grid;
     this.app.stage.addChild(
       this.grid,
-      this.gameOverWindow
+      this.winnerWindow
     );
 
     this.state = state;
@@ -26,12 +26,12 @@ export default class Game {
   }
 
   private onGameOver = (winner: Player) => {
-    this.gameOverWindow.once('playAgain', this.onPlayAgain);
-    this.gameOverWindow.show(winner);
+    this.winnerWindow.once('playAgain', this.onPlayAgain);
+    this.winnerWindow.show(winner);
   }
 
   private onPlayAgain = () => {
-    this.gameOverWindow.hide();
+    this.winnerWindow.hide();
     this.grid.reset();
     setTimeout(this.state.reset);
   }
@@ -46,6 +46,6 @@ export default class Game {
 
     this.app.renderer.resize(width, height);
     this.grid.resize(width, height);
-    this.gameOverWindow.resize(width, height);
+    this.winnerWindow.resize(width, height);
   }
 }
