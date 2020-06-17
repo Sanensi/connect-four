@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const includePath = path.join(__dirname, 'src');
+const sourcePath = path.join(__dirname, 'src', 'client');
 const nodeModulesPath = path.join(__dirname, 'node_modules');
 
 module.exports = env => {
@@ -14,12 +14,10 @@ module.exports = env => {
   }
 
   return {
-    entry: [
-      './src/app.ts'
-    ],
+    entry: path.join(sourcePath, 'app.ts'),
     mode,
     output: {
-      path: outputPath,
+      path: path.join(outputPath, 'client'),
       filename: 'app.js'
     },
 
@@ -30,7 +28,7 @@ module.exports = env => {
           use: {
             loader: 'ts-loader',
           },
-          include: includePath,
+          include: sourcePath,
           exclude: nodeModulesPath,
         },
         {
@@ -57,12 +55,12 @@ module.exports = env => {
     },
 
     devServer: {
-      contentBase: 'build/dev'
+      contentBase: outputPath
     },
 
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.join(__dirname, 'src', 'index.html'),
+        template: path.join(sourcePath, 'index.html'),
         filename: 'index.html'
       })
     ]
