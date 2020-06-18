@@ -4,10 +4,11 @@
   "description": "Simple webgl game using PixiJS",
   "main": "index.js",
   "scripts": {
-    "serve:dev": "webpack-dev-server --env.NODE_ENV=dev --progress --color --open --hot -d",
+    "build:client": "webpack --config webpack.prod.js --progress",
+    "serve:client": "webpack-dev-server --config webpack.dev.js --open --hot -d --progress",
     "clean": "rimraf build/prod",
-    "build": "webpack --env.NODE_ENV=prod --progress --color",
-    "start": "serve build/prod"
+    "build": "npm run build:client",
+    "start": "serve build/prod/client"
   },
   "author": "William Picard",
   "license": "MIT",
@@ -24,6 +25,7 @@
     "typescript": "^3.9.5",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^4.2.2"
   }
 }
