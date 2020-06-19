@@ -21,9 +21,10 @@ export default class GridGraphics extends Container {
 
   public resize(width: number, height: number) {
     const proportion = this.gridWidth / this.gridHeight;
+    const fillWidth = width/height < proportion;
 
-    this.width = width/height < proportion ? width : height*proportion;
-    this.height = width/height < proportion ? width/proportion: height;
+    this.width = fillWidth ? width : height*proportion;
+    this.height = !fillWidth ? height : width/proportion;
 
     this.position.set(width/2, height/2);
   }

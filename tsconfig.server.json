@@ -1,0 +1,22 @@
+{
+	"include": [
+		"./src/server/**/*.ts",
+	],
+	"exclude": [
+		"node_modules",
+	],
+	"compilerOptions": {
+		"rootDir": "./src/server",
+		"outDir": "./build/prod",
+		"lib": [
+			"ES2019"
+		],
+		"target": "ES6",
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"strict": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true
+	}
+}

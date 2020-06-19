@@ -12,6 +12,9 @@ module.exports = {
         test: /\.ts?$/,
         use: {
           loader: 'ts-loader',
+          options: {
+            configFile: 'tsconfig.client.json'
+          }
         },
         include: sourcePath,
         exclude: nodeModulesPath,

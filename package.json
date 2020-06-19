@@ -4,19 +4,22 @@
   "description": "Simple webgl game using PixiJS",
   "main": "index.js",
   "scripts": {
-    "build:client": "webpack --config webpack.prod.js --progress",
     "serve:client": "webpack-dev-server --config webpack.dev.js --open --hot -d --progress",
+    "build:server": "tsc --project tsconfig.server.json",
+    "build:client": "webpack --config webpack.prod.js --progress",
     "clean": "rimraf build/prod",
-    "build": "npm run build:client",
-    "start": "serve build/prod/client"
+    "build": "npm run build:server && npm run build:client",
+    "start": "node build/prod"
   },
   "author": "William Picard",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.17.1",
     "pixi.js": "^5.2.4",
     "serve": "^11.3.2"
   },
   "devDependencies": {
+    "@types/express": "^4.17.6",
     "css-loader": "^3.6.0",
     "html-webpack-plugin": "^4.3.0",
     "rimraf": "^3.0.2",
