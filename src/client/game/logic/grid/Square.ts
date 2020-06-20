@@ -1,8 +1,9 @@
 import { Point } from "pixi.js";
 
-import Component from "../Component";
-import Token from "../player/Token";
 import { Emitter } from "../../../utils/TypedEventEmitter";
+import Component from "../../../utils/Component";
+
+import Token from "../player/Token";
 
 interface SquareEvents {
   squareOver: Point;

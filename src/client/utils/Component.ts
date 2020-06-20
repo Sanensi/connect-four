@@ -1,4 +1,4 @@
-import { TypedEventEmitter, EventMap, EventKey } from "../../utils/TypedEventEmitter";
+import { TypedEventEmitter, EventMap, EventKey } from "./TypedEventEmitter";
 
 export default class Component<E extends EventMap = {}> extends TypedEventEmitter<E> {
   private parent: Component<any>;

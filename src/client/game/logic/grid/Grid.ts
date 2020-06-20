@@ -1,7 +1,8 @@
 import { Point } from "pixi.js";
 
+import Component from "../../../utils/Component";
+
 import Square from "./Square";
-import Component from "../Component";
 import Token from "../player/Token";
 
 interface GridEvents {

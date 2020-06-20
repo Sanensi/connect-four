@@ -1,7 +1,9 @@
+import { Point } from "pixi.js";
+
+import Component from "../../utils/Component";
+
 import Grid, { NoEmptySquareError } from "./grid/Grid";
 import Player from "./player/Player";
-import Component from "./Component";
-import { Point } from "pixi.js";
 
 interface GameStateEvents {
   gameOver: Player;
