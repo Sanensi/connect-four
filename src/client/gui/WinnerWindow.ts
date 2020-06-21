@@ -18,6 +18,11 @@ export default class WinnerWindow extends Container {
     align: 'center',
   });
 
+  private hoveredStyle = new TextStyle({
+    ...this.style,
+    fill: ['#ff1010', '#801010'],
+  });
+
   private playAgainText = new Text('Play again?', this.style);
 
   constructor() {
@@ -27,9 +32,7 @@ export default class WinnerWindow extends Container {
     this.playAgainText.buttonMode = true;
     
     this.playAgainText.addListener('pointerover', () => {
-      const newStyle = this.style.clone();
-      newStyle.fill = ['#ff1010', '#801010'];
-      this.playAgainText.style = newStyle;
+      this.playAgainText.style = this.hoveredStyle;
     });
 
     this.playAgainText.addListener('pointerout', () => {

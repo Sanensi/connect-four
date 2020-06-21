@@ -31,9 +31,10 @@ export default class Game extends Container {
   }
 
   private onPlayAgain = () => {
-    this.winnerWindow.hide();
-    this.grid.reset();
-    setTimeout(this.state.reset);
+    this.emit('gameEnd');
+    // this.winnerWindow.hide();
+    // this.grid.reset();
+    // setTimeout(this.state.reset);
   }
 
   public resize = (width: number, height: number) => {
