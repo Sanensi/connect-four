@@ -10,12 +10,12 @@ import Player from "./logic/player/Player";
 import Token from "./logic/player/Token";
 
 export default class GameFactory {
-  public createGame(app: PIXI.Application, gridWidth: number, gridHeight: number) {
+  public createGame(gridWidth: number, gridHeight: number) {
     const { grid, gridGraphics } = this.createGridDuo(gridWidth, gridHeight);
     const playerQueue = this.createPlayerQueue();
     const gameState = new GameState(grid, playerQueue);
 
-    return new Game(app, gridGraphics, gameState);
+    return new Game(gridGraphics, gameState);
   }
 
   private createGridDuo(gridWidth: number, gridHeight: number) {

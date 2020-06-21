@@ -1,5 +1,5 @@
 import { Container, Graphics, TextStyle, Text } from "pixi.js";
-import Player from "../logic/player/Player";
+import Player from "../game/logic/player/Player";
 
 export default class WinnerWindow extends Container {
   private style = new TextStyle({
