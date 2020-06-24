@@ -15,8 +15,7 @@ export default class GridGraphics extends Container {
     this.gridWidth = gridWidth;
     this.gridHeight = gridHeight;
 
-    this.pivot.x = this.width/2;
-    this.pivot.y = this.height/2;
+    this.pivot.set(this.width/2, this.height/2);
   }
 
   public resize(width: number, height: number) {

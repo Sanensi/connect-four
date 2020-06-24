@@ -1,4 +1,5 @@
 import { Container, TextStyle, Text } from "pixi.js";
+import Button from "./Button";
 
 export default class MainMenu extends Container {
   private baseStyle = new TextStyle({
@@ -28,59 +29,35 @@ export default class MainMenu extends Container {
     fill: ['#ff1010', '#801010'],
   });
 
-  private title = new Text('Connect-Four', this.baseStyle);
-  private localMP = new Text('Local Multiplayer', this.buttonStyle);
-  private onlineMP = new Text('Online Multiplayer', this.buttonStyle);
-
   constructor() {
     super();
 
-    this.localMP.pivot.set(this.localMP.width/2, 0);
-    this.onlineMP.pivot.set(this.onlineMP.width/2, 0);
-
-    this.localMP.interactive = true;
-    this.localMP.buttonMode = true;
-    this.onlineMP.interactive = true;
-    this.onlineMP.buttonMode = true;
-
-    this.localMP.addListener('pointerover', () => {
-      this.localMP.style = this.hoveredStyle;
-    });
-    this.localMP.addListener('pointerout', () => {
-      this.localMP.style = this.buttonStyle;
-    });
-    this.localMP.addListener('pointerup', () => {
-      this.emit('play', 'local');
-    });
-
-    this.onlineMP.addListener('pointerover', () => {
-      this.onlineMP.style = this.hoveredStyle;
-    });
-    this.onlineMP.addListener('pointerout', () => {
-      this.onlineMP.style = this.buttonStyle;
-    });
-    this.onlineMP.addListener('pointerup', () => {
-      this.emit('play', 'online');
-    });
-  }
-
-  public show() {
     const padding = 5;
 
-    this.localMP.position.set(this.title.width/2, this.title.height + 5*padding);
-    this.onlineMP.position.set(this.title.width/2, this.localMP.y + this.localMP.height + padding);
+    const title = new Text('Connect-Four', this.baseStyle);
+    const localMpBtn = new Button('Local Multiplayer', this.buttonStyle, this.hoveredStyle);
+    const onlineMpBtn = new Button('Online Multiplayer', this.buttonStyle, this.hoveredStyle);
+
+    localMpBtn.on('pressed', () => {
+      this.emit('play', 'local');
+    });
+    onlineMpBtn.on('pressed', () => {
+      this.emit('play', 'online');
+    });
+
+    localMpBtn.pivot.set(localMpBtn.width/2, 0);
+    onlineMpBtn.pivot.set(onlineMpBtn.width/2, 0);
+
+    localMpBtn.position.set(title.width/2, title.height + 5*padding);
+    onlineMpBtn.position.set(title.width/2, localMpBtn.y + localMpBtn.height + padding);
 
     this.addChild(
-      this.title,
-      this.localMP,
-      this.onlineMP
+      title,
+      localMpBtn,
+      onlineMpBtn
     );
 
     this.pivot.set(this.width / 2, this.height / 2);
-  }
-
-  public hide() {
-    this.removeChildren();
   }
 
   public resize(width: number, height: number) {
