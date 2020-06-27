@@ -1,10 +1,10 @@
 import { Application as App } from 'pixi.js';
+import ResizeableContainer from './utils/ResizeableContainer';
 import './style/index.css';
 
 import GameFactory from './game/GameFactory';
 import Game from './game/Game';
 import MainMenu from './gui/MainMenu';
-import ResizeableContainer from './utils/ResizeableContainer';
 
 class Application {
   private canvas: HTMLCanvasElement = document.querySelector('#c');

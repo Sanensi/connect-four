@@ -1,11 +1,10 @@
-import { Container } from 'pixi.js';
+import ResizeableContainer from '../utils/ResizeableContainer';
 
 import WinnerWindow from '../gui/WinnerWindow';
 
 import GridGraphics from './graphics/GridGraphics';
 import GameState from './logic/GameState';
 import Player from './logic/player/Player';
-import ResizeableContainer from '../utils/ResizeableContainer';
 
 export default class Game extends ResizeableContainer {
   private grid: GridGraphics;
