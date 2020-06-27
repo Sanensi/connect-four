@@ -1,5 +1,6 @@
 import { Container, Graphics, TextStyle, Text } from "pixi.js";
 import Player from "../game/logic/player/Player";
+import Button from "./Button";
 
 export default class WinnerWindow extends Container {
   private style = new TextStyle({
@@ -23,58 +24,51 @@ export default class WinnerWindow extends Container {
     fill: ['#ff1010', '#801010'],
   });
 
-  private playAgainText = new Text('Play again?', this.style);
-
-  constructor() {
+  constructor(winner: Player) {
     super();
 
-    this.playAgainText.interactive = true;
-    this.playAgainText.buttonMode = true;
-    
-    this.playAgainText.addListener('pointerover', () => {
-      this.playAgainText.style = this.hoveredStyle;
-    });
-
-    this.playAgainText.addListener('pointerout', () => {
-      this.playAgainText.style = this.style;
-    });
-
-    this.playAgainText.addListener('pointerup', () => {
-      this.emit('playAgain');
-    });
-  }
-
-  public show(winner: Player) {
     const padding = 5;
 
     const winnerText = new Text(`${winner.name} has won the game!`, this.style);
-    winnerText.position.set(padding, padding);
+    const playAgainBtn = new Button('Play again?', this.style, this.hoveredStyle);
 
-    this.playAgainText.pivot.set(this.playAgainText.width / 2, 0);
-    this.playAgainText.position.set(winnerText.width / 2 + padding, winnerText.height + 2 * padding);
+    playAgainBtn.on('pressed', () => {
+      this.emit('playAgain');
+    });
 
-    const windowBase = new Graphics();
-    windowBase.lineStyle(2, 0x8080C0);
-    windowBase.beginFill(0x101080);
-    windowBase.drawRoundedRect(
-      0, 0,
+    const windowBase = this.createWindowBase(
       winnerText.width + 2 * padding,
-      winnerText.height + this.playAgainText.height + 3 * padding,
-      16
+      winnerText.height + playAgainBtn.height + 3 * padding
     );
-    windowBase.endFill();
-    
+
+    winnerText.pivot.set(winnerText.width / 2, 0);
+    winnerText.position.set(windowBase.width / 2, padding);
+
+    playAgainBtn.pivot.set(playAgainBtn.width / 2, 0);
+    playAgainBtn.position.set(windowBase.width / 2, winnerText.height + 2 * padding);
+
     this.addChild(
       windowBase,
       winnerText,
-      this.playAgainText
-    );
+      playAgainBtn
+    );  
 
     this.pivot.set(this.width / 2, this.height / 2);
   }
 
-  public hide() {
-    this.removeChildren();
+  private createWindowBase(width: number, height: number) {
+    const windowBase = new Graphics();
+
+    windowBase.lineStyle(2, 0x8080C0);
+    windowBase.beginFill(0x101080);
+    windowBase.drawRoundedRect(
+      0, 0,
+      width, height,
+      16
+    );
+    windowBase.endFill();
+
+    return windowBase;
   }
 
   public resize = (width: number, height: number) => {

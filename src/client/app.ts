@@ -4,48 +4,40 @@ import './style/index.css';
 import GameFactory from './game/GameFactory';
 import Game from './game/Game';
 import MainMenu from './gui/MainMenu';
-
-interface Resizeable {
-  resize: (width: number, heigh: number) => void;
-}
+import ResizeableContainer from './utils/ResizeableContainer';
 
 class Application {
   private canvas: HTMLCanvasElement = document.querySelector('#c');
   private app = new App({ view: this.canvas });
-
-  private resizeables: Resizeable[] = [];
+  private appRoot = new ResizeableContainer();
 
   private mainMenu = new MainMenu();
   private game: Game;
 
   constructor() {
-    this.app.stage.addChild(this.mainMenu);
+    this.app.stage.addChild(this.appRoot);
+    this.appRoot.addChild(this.mainMenu);
 
     this.mainMenu.once('play', this.play);
-
-    this.resizeables.push(this.mainMenu);
 
     window.addEventListener('resize', this.resize);
     this.resize();
   }
 
   private play = (gameType) => {
-    this.app.stage.removeChild(this.mainMenu);
+    this.appRoot.removeChild(this.mainMenu);
 
     this.game = new GameFactory().createGame(7, 6);
     this.game.once('gameEnd', this.gameEnd);
 
-    this.app.stage.addChild(this.game);
-    this.resizeables.push(this.game);
-    this.resize();
+    this.appRoot.addChild(this.game);
   }
 
   private gameEnd = () => {
-    this.app.stage.removeChild(this.game);
-    this.resizeables.pop();
+    this.appRoot.removeChild(this.game);
 
     this.mainMenu.once('play', this.play);
-    this.app.stage.addChild(this.mainMenu);
+    this.appRoot.addChild(this.mainMenu);
   }
 
   private resize = () => {
@@ -53,7 +45,8 @@ class Application {
     const height = this.canvas.clientHeight;
   
     this.app.renderer.resize(width, height);
-    this.resizeables.forEach(r => r.resize(width, height));
+    this.appRoot.resize(width, height);
+    ResizeableContainer.setDefaultSize(width, height);
   }
 }
 
