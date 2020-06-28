@@ -1,26 +1,46 @@
 import { Point } from "pixi.js";
 
+import GameService from "../api/GameService";
+
 import Game from "./Game";
 import GameState from "./logic/GameState";
+import OnlineGameState from "./logic/OnlineGameState";
+
 import Grid from "./logic/grid/Grid";
 import Square from "./logic/grid/Square";
-import GridGraphics from "./graphics/GridGraphics"
-import SquareGraphics from "./graphics/SquareGraphics";
 import Player from "./logic/player/Player";
 import Token from "./logic/player/Token";
 
+import GridGraphics from "./graphics/GridGraphics"
+import SquareGraphics from "./graphics/SquareGraphics";
+
 export interface GameOptions {
   gameType: 'local' | 'online';
-  gridWidth: number;
-  gridHeight: number;
+  grid: {
+    width: number;
+    height: number;
+  };
 }
 
 export default class GameFactory {
   public createGame(options: GameOptions) {
-    const { grid, gridGraphics } = this.createGridDuo(options.gridWidth, options.gridHeight);
+    const { grid, gridGraphics } = this.createGridDuo(options.grid.width, options.grid.height);
     const playerQueue = this.createPlayerQueue();
-    const gameState = new GameState(grid, playerQueue);
 
+    let gameState: GameState;
+    switch (options.gameType) {
+      case 'local':
+        gameState = new GameState(grid, playerQueue);
+        break;
+      case 'online':
+        const socket = GameService.createGame(options.grid);
+        gameState = new OnlineGameState(grid, playerQueue, socket);
+        break;
+      default:
+        throw new Error(`Unsupported gameType: ${options.gameType}`);
+    }
+
+    gameState.setUp();
     return new Game(gridGraphics, gameState);
   }
 

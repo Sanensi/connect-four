@@ -41,8 +41,10 @@ export default class MainMenu extends Container {
 
     const options: GameOptions = {
       gameType: 'local',
-      gridWidth: 7,
-      gridHeight: 6
+      grid: {
+        width: 7,
+        height: 6
+      }
     }
 
     localMpBtn.on('pressed', () => {
@@ -54,11 +56,11 @@ export default class MainMenu extends Container {
       this.emit('play', options);
     });
 
-    localMpBtn.pivot.set(localMpBtn.width/2, 0);
-    onlineMpBtn.pivot.set(onlineMpBtn.width/2, 0);
+    localMpBtn.pivot.set(localMpBtn.width / 2, 0);
+    onlineMpBtn.pivot.set(onlineMpBtn.width / 2, 0);
 
-    localMpBtn.position.set(title.width/2, title.height + 5*padding);
-    onlineMpBtn.position.set(title.width/2, localMpBtn.y + localMpBtn.height + padding);
+    localMpBtn.position.set(title.width / 2, title.height + 5 * padding);
+    onlineMpBtn.position.set(title.width / 2, localMpBtn.y + localMpBtn.height + padding);
 
     this.addChild(
       title,
@@ -70,6 +72,6 @@ export default class MainMenu extends Container {
   }
 
   public resize(width: number, height: number) {
-    this.position.set(width/2, height/2);
+    this.position.set(width / 2, height / 2);
   }
 }

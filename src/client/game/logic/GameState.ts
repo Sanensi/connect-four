@@ -10,24 +10,21 @@ interface GameStateEvents {
 }
 
 export default class GameState extends Component<GameStateEvents> {
-  private grid: Grid;
-  private playerQueue: Player[];
-  private currentPlayerIndex: number = 0;
+  protected grid: Grid;
+  protected playerQueue: Player[];
+  protected currentPlayerIndex: number;
 
-  private get currentPlayer() {
+  protected get currentPlayer() {
     return this.playerQueue[this.currentPlayerIndex];
   }
 
   constructor(grid: Grid, playerQueue: Player[]) {
     super(grid);
     this.grid = grid;
-    this.grid.on('squareOver', this.onSquareOver);
-    this.grid.on('squareUp', this.onSquareUp);
-
     this.playerQueue = playerQueue;
   }
 
-  private onSquareOver = (position: Point) => {
+  protected onSquareOver = (position: Point) => {
     try {
       this.grid.getFirstEmptySquare(position.x).highlight(this.currentPlayer.token.highlightColor);
     }
@@ -38,7 +35,7 @@ export default class GameState extends Component<GameStateEvents> {
     }
   }
 
-  private onSquareUp = (position: Point) => {
+  protected onSquareUp = (position: Point) => {
     let connections = this.grid.dropToken(position.x, this.currentPlayer.token);
     connections = connections.filter(c => c.length >= 4);
 
@@ -58,17 +55,24 @@ export default class GameState extends Component<GameStateEvents> {
     }
   }
 
-  private nextPlayer() {
+  protected nextPlayer() {
     this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.playerQueue.length;
   }
 
-  public reset = () => {
+  public setUp() {
     this.currentPlayerIndex = 0;
     this.grid.reset();
-
-    this.grid.off("squareOver", this.onSquareOver);
-    this.grid.off("squareUp", this.onSquareUp);
     this.grid.on('squareOver', this.onSquareOver);
     this.grid.on('squareUp', this.onSquareUp);
+  }
+
+  public tearDown() {
+    this.grid.off("squareOver", this.onSquareOver);
+    this.grid.off("squareUp", this.onSquareUp);
+  }
+
+  public reset() {
+    this.tearDown();
+    this.setUp();
   }
 }

@@ -29,6 +29,7 @@ export default class Game extends ResizeableContainer {
   }
 
   private onPlayAgain = () => {
+    this.state.tearDown();
     this.emit('gameEnd');
     // this.removeChild(this.winnerWindow);
     // this.grid.reset();
