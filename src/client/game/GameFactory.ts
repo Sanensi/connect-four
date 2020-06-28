@@ -9,9 +9,15 @@ import SquareGraphics from "./graphics/SquareGraphics";
 import Player from "./logic/player/Player";
 import Token from "./logic/player/Token";
 
+export interface GameOptions {
+  gameType: 'local' | 'online';
+  gridWidth: number;
+  gridHeight: number;
+}
+
 export default class GameFactory {
-  public createGame(gridWidth: number, gridHeight: number) {
-    const { grid, gridGraphics } = this.createGridDuo(gridWidth, gridHeight);
+  public createGame(options: GameOptions) {
+    const { grid, gridGraphics } = this.createGridDuo(options.gridWidth, options.gridHeight);
     const playerQueue = this.createPlayerQueue();
     const gameState = new GameState(grid, playerQueue);
 

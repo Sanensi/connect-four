@@ -1,5 +1,6 @@
 import { Container, TextStyle, Text } from "pixi.js";
 import Button from "./Button";
+import { GameOptions } from "../game/GameFactory";
 
 export default class MainMenu extends Container {
   private baseStyle = new TextStyle({
@@ -38,11 +39,19 @@ export default class MainMenu extends Container {
     const localMpBtn = new Button('Local Multiplayer', this.buttonStyle, this.hoveredStyle);
     const onlineMpBtn = new Button('Online Multiplayer', this.buttonStyle, this.hoveredStyle);
 
+    const options: GameOptions = {
+      gameType: 'local',
+      gridWidth: 7,
+      gridHeight: 6
+    }
+
     localMpBtn.on('pressed', () => {
-      this.emit('play', 'local');
+      options.gameType = 'local';
+      this.emit('play', options);
     });
     onlineMpBtn.on('pressed', () => {
-      this.emit('play', 'online');
+      options.gameType = 'online';
+      this.emit('play', options);
     });
 
     localMpBtn.pivot.set(localMpBtn.width/2, 0);

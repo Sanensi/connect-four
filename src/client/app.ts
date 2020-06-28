@@ -2,7 +2,7 @@ import { Application as App } from 'pixi.js';
 import ResizeableContainer from './utils/ResizeableContainer';
 import './style/index.css';
 
-import GameFactory from './game/GameFactory';
+import GameFactory, { GameOptions } from './game/GameFactory';
 import Game from './game/Game';
 import MainMenu from './gui/MainMenu';
 
@@ -24,10 +24,10 @@ class Application {
     this.resize();
   }
 
-  private play = (gameType) => {
+  private play = (options: GameOptions) => {
     this.appRoot.removeChild(this.mainMenu);
 
-    this.game = new GameFactory().createGame(7, 6);
+    this.game = new GameFactory().createGame(options);
     this.game.once('gameEnd', this.gameEnd);
 
     this.appRoot.addChild(this.game);
